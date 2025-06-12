@@ -9,22 +9,17 @@ require('dotenv').config();
 const server = express();
 server.use(cors());
 
-server.use(
-  helmet({
-    contentSecurityPolicy: {
-      directives: {
-        defaultSrc: ["'self'"],
-        scriptSrc: ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net"],
-        styleSrc: ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net", "https://cdnjs.cloudflare.com", "https://sistemalumafrontend.onrender.com"],
-        imgSrc: ["'self'", "data:", "https://sistemalumafrontend.onrender.com"],
-        fontSrc: ["'self'", "https://cdnjs.cloudflare.com"],
-        connectSrc: ["'self'", "https://sistemalumabackend.onrender.com"],
-        objectSrc: ["'none'"],
-        frameAncestors: ["'none'"],
-      },
-    },
-  })
-);
+server.use(helmet.contentSecurityPolicy({
+  directives: {
+    defaultSrc: ["'self'"],
+    scriptSrc: ["'self'", "https://cdn.jsdelivr.net", "https://cdnjs.cloudflare.com"],
+    styleSrc: ["'self'", "https://cdn.jsdelivr.net", "https://cdnjs.cloudflare.com", "https://sistemalumafrontend.onrender.com", "'unsafe-inline'"],
+    imgSrc: ["'self'", "https://sistemalumafrontend.onrender.com", "data:"],
+    fontSrc: ["'self'", "https://cdnjs.cloudflare.com"],
+    connectSrc: ["'self'", "https://sistemalumabackend.onrender.com"],
+    objectSrc: ["'none'"]
+  }
+}));
 
 server.engine('html', require('ejs').renderFile);
 server.set('view engine', 'html');
