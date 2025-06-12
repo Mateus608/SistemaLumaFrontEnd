@@ -2,24 +2,13 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');  
 const jwt = require('jsonwebtoken');
-const helmet = require('helmet');
+const cookieParser = require('cookie-parser');
 
 require('dotenv').config();
 
 const server = express();
 server.use(cors());
-
-server.use(helmet.contentSecurityPolicy({
-  directives: {
-    defaultSrc: ["'self'"],
-    scriptSrc: ["'self'", "https://cdn.jsdelivr.net", "https://cdnjs.cloudflare.com"],
-    styleSrc: ["'self'", "https://cdn.jsdelivr.net", "https://cdnjs.cloudflare.com", "https://sistemalumafrontend.onrender.com", "'unsafe-inline'"],
-    imgSrc: ["'self'", "https://sistemalumafrontend.onrender.com", "data:"],
-    fontSrc: ["'self'", "https://cdnjs.cloudflare.com"],
-    connectSrc: ["'self'", "https://sistemalumabackend.onrender.com"],
-    objectSrc: ["'none'"]
-  }
-}));
+server.use(cookieParser());
 
 server.engine('html', require('ejs').renderFile);
 server.set('view engine', 'html');
@@ -29,34 +18,43 @@ server.use(express.static(path.join(__dirname, 'assets')));
 server.use(express.static(path.join(__dirname, 'code')));
 
 server.get('/', (req, res) => {
-    res.render('login');
-});
+    const token = req.cookies.token;
+    if (!token) {
+        return res.render('login');
+    }
 
-server.get('/luma', (req, res) => {
-    res.render('form');
-});
-
-server.get('/validate', (req, res) => {
-  const authHeader = req.headers['authorization'];
-  if (!authHeader) return res.status(401).json({ message: 'Token ausente' });
-
-  const token = authHeader.split(' ')[1];
-  if (!token) return res.status(401).json({ message: 'Token inválido' });
-
-  try {
-    const decoded = jwt.verify(token, process.env.SECRET);
-    res.status(200).json({ success: true, usuario: decoded.usuario });
-  } catch (err) {
-    res.status(401).json({ message: 'Token expirado ou inválido' });
-  }
+    try {
+        const decoded = jwt.verify(token, process.env.SECRET);
+        return res.render('form', { usuario: decoded.usuario });
+    } catch (err) {
+        return res.render('login');
+    }
 });
 
 server.get('/annotations', (req, res) => {
-   res.render('annotations');
+    const token = req.cookies.token; 
+    if (!token) {
+        return res.render('login');
+    }
+
+    try {
+        return res.render('annotations');
+    } catch (err) {
+        return res.render('login');
+    }
 });
 
 server.get('/error', (req, res) => {
-    res.render('404');
+    const token = req.cookies.token;
+    if (!token) {
+        return res.render('login');
+    }
+
+    try {
+        return res.render('404');
+    } catch (err) {
+        return res.render('login');
+    }
 });
 
 server.listen(process.env.PORT, () => {
