@@ -5,7 +5,7 @@ document.addEventListener('click', async function (e) {
     const id = e.target.getAttribute('data-id');
 
     try {
-      const res = await fetch(`http://127.0.0.1:4040/annotations/${id}`);
+      const res = await fetch(`https://sistemalumabackend.onrender.com/annotations/${id}`);
       if (!res.ok) throw new Error('Mensagem não encontrada');
       const msg = await res.json();
 
@@ -49,7 +49,7 @@ document.addEventListener('click', async function (e) {
     if (!confirmDelete.isConfirmed) return;
 
     try {
-      const res = await fetch(`http://127.0.0.1:4040/annotations/${id}`, {
+      const res = await fetch(`https://sistemalumabackend.onrender.com/annotations/${id}`, {
         method: 'DELETE'
       });
 
