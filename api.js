@@ -2,11 +2,51 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');  
 const jwt = require('jsonwebtoken');
+const helmet = require('helmet');
 
 require('dotenv').config();
 
 const server = express();
 server.use(cors());
+
+server.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        baseUri: ["'self'"],
+        scriptSrc: [
+          "'self'",
+          "https://cdn.jsdelivr.net",
+          "'unsafe-inline'" // necessário para alguns scripts inline, remova se possível
+        ],
+        styleSrc: [
+          "'self'",
+          "'unsafe-inline'",
+          "https://cdn.jsdelivr.net",
+          "https://cdnjs.cloudflare.com",
+          "https://sistemalumafrontend.onrender.com"
+        ],
+        fontSrc: [
+          "'self'",
+          "https://cdnjs.cloudflare.com"
+        ],
+        imgSrc: [
+          "'self'",
+          "data:",
+          "https://sistemalumafrontend.onrender.com"
+        ],
+        connectSrc: [
+          "'self'",
+          "https://sistemalumabackend.onrender.com"
+        ],
+        objectSrc: ["'none'"],
+        frameAncestors: ["'none'"],
+        upgradeInsecureRequests: [],
+      },
+    },
+  })
+);
 
 server.engine('html', require('ejs').renderFile);
 server.set('view engine', 'html');
