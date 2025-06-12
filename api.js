@@ -15,51 +15,47 @@ server.use(express.static(path.join(__dirname, 'style')));
 server.use(express.static(path.join(__dirname, 'assets')));
 server.use(express.static(path.join(__dirname, 'code')));
 
-function verificarToken(req) {
-    const authHeader = req.headers['authorization'];
-    if (!authHeader) return null;
-
-    const token = authHeader.split(' ')[1];
-    if (!token) return null;
-
-    try {
-        return jwt.verify(token, process.env.SECRET);
-    } catch (err) {
-        return null;
-    }
-}
-
 server.get('/', (req, res) => {
     const authHeader = req.headers['authorization'];
-    if (!authHeader) return res.redirect('/login');
+    if (!authHeader) return res.render('login');
 
     const token = authHeader.split(' ')[1];
-    if (!token) return res.redirect('/login');
+    if (!token) return res.render('login');
 
     try {
         const decoded = jwt.verify(token, process.env.SECRET);
         return res.render('form', { usuario: decoded.usuario });
     } catch (err) {
-        return res.redirect('/login');
+        return res.render('login');
     }
 });
 
 server.get('/annotations', (req, res) => {
-    const decoded = verificarToken(req);
-    if (!decoded) {
+    const authHeader = req.headers['authorization'];
+    if (!authHeader) return res.render('login');
+
+    const token = authHeader.split(' ')[1];
+    if (!token) return res.render('login');
+
+    try {
+        return res.render('annotations');
+    } catch (err) {
         return res.render('login');
     }
-
-    return res.render('annotations');
 });
 
 server.get('/error', (req, res) => {
-    const decoded = verificarToken(req);
-    if (!decoded) {
+    const authHeader = req.headers['authorization'];
+    if (!authHeader) return res.render('login');
+
+    const token = authHeader.split(' ')[1];
+    if (!token) return res.render('login');
+
+    try {
+        return res.render('404');
+    } catch (err) {
         return res.render('login');
     }
-
-    return res.render('404');
 });
 
 server.listen(process.env.PORT, () => {
