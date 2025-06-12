@@ -16,46 +16,34 @@ server.use(express.static(path.join(__dirname, 'assets')));
 server.use(express.static(path.join(__dirname, 'code')));
 
 server.get('/', (req, res) => {
-    const authHeader = req.headers['authorization'];
-    if (!authHeader) return res.render('login');
+    res.render('login');
+});
 
-    const token = authHeader.split(' ')[1];
-    if (!token) return res.render('login');
+server.get('/luma', (req, res) => {
+    res.render('form');
+});
 
-    try {
-        const decoded = jwt.verify(token, process.env.SECRET);
-        return res.render('form', { usuario: decoded.usuario });
-    } catch (err) {
-        return res.render('login');
-    }
+server.get('/validate', (req, res) => {
+  const authHeader = req.headers['authorization'];
+  if (!authHeader) return res.status(401).json({ message: 'Token ausente' });
+
+  const token = authHeader.split(' ')[1];
+  if (!token) return res.status(401).json({ message: 'Token inválido' });
+
+  try {
+    const decoded = jwt.verify(token, process.env.SECRET);
+    res.status(200).json({ success: true, usuario: decoded.usuario });
+  } catch (err) {
+    res.status(401).json({ message: 'Token expirado ou inválido' });
+  }
 });
 
 server.get('/annotations', (req, res) => {
-    const authHeader = req.headers['authorization'];
-    if (!authHeader) return res.render('login');
-
-    const token = authHeader.split(' ')[1];
-    if (!token) return res.render('login');
-
-    try {
-        return res.render('annotations');
-    } catch (err) {
-        return res.render('login');
-    }
+   res.render('annotations');
 });
 
 server.get('/error', (req, res) => {
-    const authHeader = req.headers['authorization'];
-    if (!authHeader) return res.render('login');
-
-    const token = authHeader.split(' ')[1];
-    if (!token) return res.render('login');
-
-    try {
-        return res.render('404');
-    } catch (err) {
-        return res.render('login');
-    }
+    res.render('404');
 });
 
 server.listen(process.env.PORT, () => {
