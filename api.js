@@ -14,35 +14,13 @@ server.use(
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
-        baseUri: ["'self'"],
-        scriptSrc: [
-          "'self'",
-          "https://cdn.jsdelivr.net",
-          "'unsafe-inline'" // necessário para alguns scripts inline, remova se possível
-        ],
-        styleSrc: [
-          "'self'",
-          "'unsafe-inline'",
-          "https://cdn.jsdelivr.net",
-          "https://cdnjs.cloudflare.com",
-          "https://sistemalumafrontend.onrender.com"
-        ],
-        fontSrc: [
-          "'self'",
-          "https://cdnjs.cloudflare.com"
-        ],
-        imgSrc: [
-          "'self'",
-          "data:",
-          "https://sistemalumafrontend.onrender.com"
-        ],
-        connectSrc: [
-          "'self'",
-          "https://sistemalumabackend.onrender.com"
-        ],
+        scriptSrc: ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net"],
+        styleSrc: ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net", "https://cdnjs.cloudflare.com", "https://sistemalumafrontend.onrender.com"],
+        imgSrc: ["'self'", "data:", "https://sistemalumafrontend.onrender.com"],
+        fontSrc: ["'self'", "https://cdnjs.cloudflare.com"],
+        connectSrc: ["'self'", "https://sistemalumabackend.onrender.com"],
         objectSrc: ["'none'"],
         frameAncestors: ["'none'"],
-        upgradeInsecureRequests: [],
       },
     },
   })
