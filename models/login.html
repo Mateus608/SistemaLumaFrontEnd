@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="http://127.0.0.1:3000/icons/logo-luma.png" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="http://127.0.0.1:3000/style.css">
+    <link rel="stylesheet" href="http://127.0.0.1:3000/mediaQueries.css">
+    <title>Login - Luma</title>
+</head>
+<style>
+    
+
+.div-login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    width: 300px;
+    height: 200px;
+    background-color: #1a202b;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border: 1px solid rgb(87, 87, 87);
+    border-radius: 10px;
+    padding: 40px;
+}
+
+.div-login p {
+    letter-spacing: 0.5px;
+    font-size: 18px;
+    margin: 0;
+}
+
+.div-pass, .div-user {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+label {
+    font-size: 14px;
+    letter-spacing: 0.5px;
+}
+
+input {
+    border-radius: 10px;
+    height: 25px;
+    border: 1px solid #919191;
+    letter-spacing: 0.5px;
+    font-size: 13px;
+    padding: 0 5px 0 5px;
+}
+
+button {
+    letter-spacing: 0.5px;
+    font-size: 14px;
+    color: #ffffff;
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    transition: all 300ms ease-out;
+    background-color: #047400;
+    cursor: pointer;
+}
+
+.logo {
+    height: 40px;
+}
+
+.gif {
+    height: 100px;
+ 
+}
+
+.p-mensagem {
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    text-align: center;
+}
+
+</style>
+<body>
+    <img class="gif" src="http://127.0.0.1:3000/gif/1968437_c6c64.gif" alt="">
+    <form id="loginForm">
+    <div class="div-login">
+        <img class="logo" src="http://127.0.0.1:3000/icons/logo-luma.png" alt="">
+        <div style="width: 100%;">
+        <div class="div-user">
+            <label for="text">Usuário</label>
+            <input type="text" name="login" placeholder="Digite o usuário">
+        </div>
+        <div style="margin-top: 10px;" class="div-pass">
+            <label for="text">Senha</label>
+            <div>
+            <input type="password" id="passwd" name="passwd" placeholder="Digite sua senha" style="width: 83%;">
+            <i id="togglePassword" class="fa-solid fa-eye" style="cursor: pointer; margin-left: 10px; display: inline;"></i>
+            <i id="togglePasswordClose" style="cursor: pointer; margin-left: 10px; display: none;" class="fa-solid fa-eye-slash"></i>
+        </div>
+        </div>
+    </div>
+        <button class="btn-submit" type="submit">Acessar</button>
+    </div>
+</form>
+<div class="footer">Feito com ❤️ por você</div>
+
+<script>
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
+    e.preventDefault(); // Impede o envio padrão do formulário
+
+    const usuario = document.querySelector('input[name="login"]').value;
+    const password = document.querySelector('input[name="passwd"]').value;
+
+    try {
+        const response = await fetch('https://sistemalumabackend.onrender.com/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({ usuario, password })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            window.location.href = '/'; // Redireciona para página inicial
+        } else {
+            alert(result.message); // Mostra erro
+        }
+
+    } catch (err) {
+        console.error('Erro na requisição:', err);
+        alert('Erro ao tentar login. Tente novamente.');
+    }
+});
+
+    const passwordInput = document.getElementById('passwd');
+    const togglePasswordButton = document.getElementById('togglePassword');
+    const togglePasswordCloseButton = document.getElementById('togglePasswordClose');
+
+    // Adicione um evento de clique para alternar a visibilidade da senha
+    togglePasswordButton.addEventListener('click', function () {
+        passwordInput.type = 'text';
+
+        togglePasswordButton.style.display = 'none';
+        togglePasswordCloseButton.style.display = 'inline';
+    });
+
+    togglePasswordCloseButton.addEventListener('click', function () {
+        passwordInput.type = 'password';
+
+        togglePasswordCloseButton.style.display = 'none';
+        togglePasswordButton.style.display = 'inline';
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+.swal2-popup {
+  border: 1px solid rgb(87, 87, 87) !important;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Fonte personalizada */
+  border-radius: 12px !important;
+}
+
+.custom-icon {
+  width: 60px;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.custom-swal-html {
+  text-align: center;
+  font-size: 16px;
+}
+
+.custom-swal {
+  border-radius: 12px;
+  padding: 20px;
+}

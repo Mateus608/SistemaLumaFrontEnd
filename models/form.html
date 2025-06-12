@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" href="http://127.0.0.1:3000/icons/logo-luma.png" />
+  <link rel="stylesheet" href="http://127.0.0.1:3000/style.css">
+  <link rel="stylesheet" href="http://127.0.0.1:3000/mediaQueries.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <title>Luma</title>
+</head>
+
+<body>
+  <div style="display: none;" id="usuario" data-usuario='<%= JSON.stringify(usuario) %>'></div>
+  <audio id="background-music" src="http://127.0.0.1:3000/music/all%20star.mp3" loop muted></audio>
+  <div class="container">
+    <div class="sound">
+      <div>
+      <img onclick="soundDisable()" id="sound" style="display: none;" src="http://127.0.0.1:3000/icons/sound.png" alt="">
+      <img onclick="soundEnable()" id="no-sound" src="http://127.0.0.1:3000/icons/no-sound.png" alt="">
+      </div>
+      <p id="music-title">Nenhuma música tocando</p>
+    </div>
+    <h2>❤️ Eu te amo há:</h2>
+    <p id="counter"></p>
+
+    <div class="carousel" id="carousel">
+      <img src="http://127.0.0.1:3000/img/img1.png" alt="Foto 1" />
+      <img src="http://127.0.0.1:3000/img/img2.png" alt="Foto 2" />
+      <img src="http://127.0.0.1:3000/img/img3.png" alt="Foto 3" />
+      <img src="http://127.0.0.1:3000/img/img4.png" alt="Foto 4" />
+      <img src="http://127.0.0.1:3000/img/img5.png" alt="Foto 5" />
+      <img src="http://127.0.0.1:3000/img/img6.png" alt="Foto 6" />
+      <img src="http://127.0.0.1:3000/img/img7.png" alt="Foto 7" />
+      <img src="http://127.0.0.1:3000/img/img8.png" alt="Foto 8" />
+      <img src="http://127.0.0.1:3000/img/img9.png" alt="Foto 9" />
+      <img src="http://127.0.0.1:3000/img/img10.png" alt="Foto 10" />
+      <img src="http://127.0.0.1:3000/img/img11.png" alt="Foto 11" />
+    </div>
+
+    <div class="buttons">
+      <button id="prevBtn" aria-label="Imagem anterior">❮</button>
+      <button id="nextBtn" aria-label="Próxima imagem">❯</button>
+    </div>
+
+    <h2>Nossas anotações 💌</h2>
+    <nav>
+      <label class="type-msg">
+        <input type="radio" name="opcao" value="Viagens" hidden>
+        <span>Viagens</span>
+      </label>
+      <label class="type-msg">
+        <input type="radio" name="opcao" value="Planos" hidden>
+        <span>Planos</span>
+      </label>
+      <label class="type-msg">
+        <input type="radio" name="opcao" value="Conversas" hidden>
+        <span>Conversas</span>
+      </label>
+      <label class="type-msg">
+        <input type="radio" name="opcao" value="Recados" hidden>
+        <span>Recados</span>
+      </label>
+      <label class="type-msg">
+        <input type="radio" name="opcao" value="Mensagens" hidden>
+        <span>Mensagens</span>
+      </label>
+
+    </nav>
+    <textarea id="notas" placeholder="Escreva aqui nossos sonhos, planos ou recadinhos..."></textarea>
+    <br />
+    <nav class="nav-btn">
+      <button class="save-btn">Salvar Anotações</button>
+      <button onclick="annotations()" class="btn-saves">Anotações Salvas</button>
+      <button onclick="abrirPainel()" class="btn-menu">Menu</button>
+    </nav>
+
+    <div class="footer">Feito com ❤️ por você</div>
+  </div>
+
+  <div id="painel" class="painel-lateral">
+    <button class="icon-button" onclick="fecharPainel()"><i style="color: white; font-size: 20px;"
+        class="fa-solid fa-circle-xmark"></i></button>
+    <p><a id="btn-sair">Logout<i style="margin-left: 10px;" class="fa-solid fa-right-from-bracket"></i></a></p>
+    <p><a style="cursor: pointer; text-decoration: none; color: white;" href="http://127.0.0.1:3000/error">Galeria<i
+          style="margin-left: 10px;" class="fa-regular fa-image"></i></a></p>
+    <p><a style="cursor: pointer; text-decoration: none; color: white;" href="http://127.0.0.1:3000/error">Discoteca<i
+          style="margin-left: 10px;" class="fa-solid fa-compact-disc"></i></a></p>
+    <p><a style="cursor: pointer; text-decoration: none; color: white;" href="http://127.0.0.1:3000/error">Cofrinho<i
+          style="margin-left: 10px;" class="fa-solid fa-piggy-bank"></i></a></p>
+  </div>
+
+  <script src="http://127.0.0.1:3000/actions.js"></script>
+  <script src="http://127.0.0.1:3000/counter.js"></script>
+  <script src="http://127.0.0.1:3000/clienteForm.js"></script>
+  <script src="http://127.0.0.1:3000/sound.js"></script>
+</body>
+
+</html>
