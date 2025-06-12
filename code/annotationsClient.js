@@ -84,7 +84,7 @@ document.addEventListener('click', async function (e) {
 
   async function carregarMensagens() {
     try {
-      const response = await fetch('http://127.0.0.1:4040/annotations');
+      const response = await fetch('https://sistemalumabackend.onrender.com/annotations');
       const mensagens = await response.json();
       const tbody = document.getElementById('mensagens-tbody');
 
@@ -128,16 +128,16 @@ document.addEventListener('click', async function (e) {
   function getIconPath(tipo) {
   switch (tipo.toLowerCase()) {
     case 'viagens':
-      return 'http://127.0.0.1:3000/icons/viagens.png';
+      return 'https://sistemalumafrontend.onrender.com/icons/viagens.png';
     case 'planos':
-      return 'http://127.0.0.1:3000/icons/planos.png';
+      return 'https://sistemalumafrontend.onrender.com/icons/planos.png';
     case 'conversas':
-      return 'http://127.0.0.1:3000/icons/conversas.png';
+      return 'https://sistemalumafrontend.onrender.com/icons/conversas.png';
     case 'recados':
-      return 'http://127.0.0.1:3000/icons/text-message.png';
+      return 'https://sistemalumafrontend.onrender.com/icons/text-message.png';
     case 'mensagens':
-      return 'http://127.0.0.1:3000/icons/mensagens.png';
+      return 'https://sistemalumafrontend.onrender.com/icons/mensagens.png';
     default:
-      return 'http://127.0.0.1:3000/icons/image.png';
+      return 'https://sistemalumafrontend.onrender.com/icons/image.png';
   }
 }

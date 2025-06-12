@@ -26,7 +26,7 @@ document.querySelector('.save-btn').addEventListener('click', async function () 
 
     try {
         // Envia os dados para o servidor
-        const response = await fetch('http://127.0.0.1:4040/message', {
+        const response = await fetch('https://sistemalumabackend.onrender.com/message', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

@@ -62,12 +62,12 @@ function fecharPainel() {
 }
 
 function annotations() {
-  window.location.href = 'http://127.0.0.1:3000/annotations';
+  window.location.href = 'https://sistemalumafrontend.onrender.com/annotations';
 }
 
 document.getElementById('btn-sair').addEventListener('click', async () => {
                 try {
-                    const response = await fetch('http://127.0.0.1:4040/logout', {
+                    const response = await fetch('https://sistemalumabackend.onrender.com/logout', {
                         method: 'POST',
                         credentials: 'include' // enviar o cookie
                     });
