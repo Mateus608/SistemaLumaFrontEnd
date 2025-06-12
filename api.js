@@ -30,12 +30,18 @@ function verificarToken(req) {
 }
 
 server.get('/', (req, res) => {
-    const decoded = verificarToken(req);
-    if (!decoded) {
-        return res.render('login');
-    }
+    const authHeader = req.headers['authorization'];
+    if (!authHeader) return res.redirect('/login');
 
-    return res.render('form', { usuario: decoded.usuario });
+    const token = authHeader.split(' ')[1];
+    if (!token) return res.redirect('/login');
+
+    try {
+        const decoded = jwt.verify(token, process.env.SECRET);
+        return res.render('form', { usuario: decoded.usuario });
+    } catch (err) {
+        return res.redirect('/login');
+    }
 });
 
 server.get('/annotations', (req, res) => {
